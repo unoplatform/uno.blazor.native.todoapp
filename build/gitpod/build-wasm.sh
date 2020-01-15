@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd src/MyApp.Wasm
+pushd /workspace/uno.blazor.native.todoapp/src/MyApp.Wasm
 
 export NUGET_PACKAGES=/workspace/.nuget
 
