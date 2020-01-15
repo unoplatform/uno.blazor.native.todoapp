@@ -1,0 +1,11 @@
+﻿<StackLayout Margin="new Thickness(20)" Orientation="StackOrientation.Horizontal">
+    <Switch @bind-IsToggled="Item.IsDone" />
+    <Label Text="@Item.Text"
+           TextDecorations="(Item.IsDone ? TextDecorations.Strikethrough : TextDecorations.None)"
+           HorizontalOptions="LayoutOptions.FillAndExpand" />
+</StackLayout>
+
+@code
+{
+    [Parameter] public TodoItem Item { get; set; }
+}

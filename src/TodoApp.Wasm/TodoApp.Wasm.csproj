@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<WasmHead>true</WasmHead>
+		<DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
+		<NoWarn>NU1701</NoWarn>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<MonoRuntimeDebuggerEnabled Condition="'$(Configuration)'=='Debug'">true</MonoRuntimeDebuggerEnabled>
+		<WasmShellILLinkerEnabled>false</WasmShellILLinkerEnabled>
+		<WasmShellEnableLongPathSupport>false</WasmShellEnableLongPathSupport>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Include="..\TodoApp.UWP\Assets\*.png" Link="Assets\%(FileName)%(Extension)" />
+	</ItemGroup>
+	<ItemGroup>
+		<LinkerDescriptor Include="LinkerConfig.xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="WasmCSS\Fonts.css" />
+		<EmbeddedResource Include="WasmScripts\*.js" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.TypeScript.Compiler" Version="3.1.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.3.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<!-- Note that for WebAssembly version 1.1.1 of the console logger required -->
+		<PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+		<PackageReference Include="Uno.UI" Version="2.1.0-dev.716" />
+		<PackageReference Include="Uno.UI.Sample.Banner" Version="1.44.0-dev.23" />
+		<PackageReference Include="Uno.Wasm.Bootstrap" Version="1.0.10" />
+		<PackageReference Include="Uno.Xamarin.Forms.Platform" Version="4.3.4" />
+		<DotNetCliToolReference Include="Uno.Wasm.Bootstrap.Cli" Version="1.0.10" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\TodoApp\TodoApp.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="ConsoleLogger\" />
+	</ItemGroup>
+	<Import Project="..\TodoApp.UWP\TodoApp.Uwp.Shared.projitems" Label="Shared" />
+</Project>

@@ -1,0 +1,79 @@
+﻿@inject AppState AppState
+
+<StackLayout>
+    <Frame BorderColor="Color.LightBlue" CornerRadius="10" Margin="5" Padding="10">
+        <StackLayout Orientation="StackOrientation.Horizontal">
+            @* Input area *@
+            <Entry @bind-Text="newText"
+                   Placeholder="What's to be done?"
+                   OnCompleted="AddItem"
+                   IsEnabled="(!isAdding)"
+                   HorizontalOptions="LayoutOptions.FillAndExpand" />
+            <Button Text="Add"
+                    OnClick="AddItem"
+                    IsEnabled="(!isAdding && !string.IsNullOrWhiteSpace(newText))" />
+            <ActivityIndicator Color="Color.Orange"
+                               IsRunning="isAdding" />
+        </StackLayout>
+    </Frame>
+    <Frame BorderColor="Color.LightBlue" CornerRadius="10" Margin="5" Padding="10">
+        <ScrollView>
+            <StackLayout>
+                @* List of todos *@
+                @if (items == null)
+                {
+                    <StackLayout Orientation="StackOrientation.Horizontal">
+                        <Label Text="Loading..." />
+                        <ActivityIndicator Color="Color.Purple"
+                                           IsRunning="true" />
+                    </StackLayout>
+                }
+                else
+                {
+                    foreach (var item in items)
+                    {
+                        <TodoEntry Item="item" />
+                    }
+                }
+            </StackLayout>
+        </ScrollView>
+    </Frame>
+</StackLayout>
+
+@code
+{
+    string newText;
+    bool isAdding;
+
+    List<TodoItem> items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AppState.OnChange += OnItemsChanged;
+        await Task.Delay(5000);
+        items = await AppState.TodoDatabase.GetItemsAsync();
+    }
+
+    private async Task AddItem()
+    {
+        isAdding = true;
+        StateHasChanged();
+
+        // Create an artificial delay to make the activity indicator show up
+        await Task.Delay(500);
+
+        await AppState.TodoDatabase.SaveItemAsync(new TodoItem { Text = newText });
+
+        newText = null;
+
+        isAdding = false;
+
+        items = await AppState.TodoDatabase.GetItemsAsync();
+    }
+
+    private async Task OnItemsChanged()
+    {
+        items = await AppState.TodoDatabase.GetItemsAsync();
+        StateHasChanged();
+    }
+}
