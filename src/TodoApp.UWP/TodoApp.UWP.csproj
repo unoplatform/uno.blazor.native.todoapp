@@ -104,7 +104,7 @@
     <PackageReference Include="Uno.UI.Sample.Banner">
       <Version>1.44.0-dev.23</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
