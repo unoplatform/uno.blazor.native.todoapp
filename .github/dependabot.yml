@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: weekly
+    time: "10:00"
+  open-pull-requests-limit: 10
+  labels:
+  - kind/dependency
+  - do-not-merge/work-in-progress
+  ignore:
+  - dependency-name: Uno.Wasm.Bootstrap
+    versions:
+    - 1.3.6
+    - 2.0.0
+  - dependency-name: Microsoft.TypeScript.MSBuild
+    versions:
+    - 4.1.2
+    - 4.1.4
+    - 4.2.2
+    - 4.2.3
+  - dependency-name: Uno.UI
+    versions:
+    - 3.1.12
+    - 3.1.14
+    - 3.5.1
+  - dependency-name: Microsoft.NETCore.UniversalWindowsPlatform
+    versions:
+    - 6.2.11
